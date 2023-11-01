@@ -1,22 +1,33 @@
-import logo from './logo.svg';
+import animationData from './assets/animation.json';
 import './App.css';
+import Lottie from 'react-lottie';
 
 function App() {
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <Lottie
+        options={defaultOptions}
+          height={200}
+          width={200}
+        />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+         Truetalk messenger
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <span
+          className="comming-soon-span"
         >
-          Learn React
-        </a>
+          Coming soon . . .
+        </span>
       </header>
     </div>
   );
