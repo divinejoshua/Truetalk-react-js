@@ -12,6 +12,20 @@ header img{
   width: 80px;
 }
 
-.hero-section p{
+.hero-section{
+  padding-top: 30px;
   text-align: center;
+}
+.hero-section p{
+  font-weight: bold;
+  color : #696969;
+}
+.hero-images-list img{
+ width: 40px;
+ border: 1px solid #dfdfdf;
+ border-radius: 100px;
+ padding: 2px
+}
+.hero-social-icons img{
+  padding: 10px;
 }

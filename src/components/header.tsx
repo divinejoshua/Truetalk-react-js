@@ -3,7 +3,7 @@ import React from 'react'
 export default function HeaderComponent() {
   return (
     <header>
-        <img alt="header" src={require("../assets/header.png")} />
+        <img alt="truetalk" src={require("../assets/header.png")} />
     </header>
   )
 }
