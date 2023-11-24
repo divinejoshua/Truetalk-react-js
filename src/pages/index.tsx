@@ -7,6 +7,7 @@ import snapchatSvg from "../assets/socials/snapchat.svg";
 import whatsappSvg from "../assets/socials/whatsapp.svg";
 import copyLinkSvg from "../assets/hero/copy-link.svg";
 import HeaderComponent from '../components/header'
+import MessageList from '../components/messageList';
 
 export default function HomePage() {
   return (
@@ -38,6 +39,13 @@ export default function HomePage() {
             <img alt="truetalk" src={copyLinkSvg} className='mt-1'/> &nbsp;&nbsp;Copy link
           </button>
         </center>
+      </section>
+
+      <section className='message-section mt-7 mb-20 px-4'>
+        <div className='message-bar py-4 text-gray-500 border-y'>
+          <h5 className='text-sm'>All messages &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;120</h5>
+        </div>
+        <MessageList/>
       </section>
 
 
