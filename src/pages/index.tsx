@@ -6,8 +6,8 @@ import twitterSvg from "../assets/socials/twitter.svg";
 import snapchatSvg from "../assets/socials/snapchat.svg";
 import whatsappSvg from "../assets/socials/whatsapp.svg";
 import copyLinkSvg from "../assets/hero/copy-link.svg";
-import HeaderComponent from '../components/header'
-import MessageList from '../components/messageList';
+import HeaderComponent from '../components/Header'
+import MessageList from '../components/MessageList';
 
 export default function HomePage() {
   return (

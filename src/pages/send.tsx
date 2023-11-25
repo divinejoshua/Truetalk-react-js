@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import HeaderComponent from '../components/header'
+import HeaderComponent from '../components/Header'
 import userSVG from "../assets/user.svg"
 
 export default function SendMessagePage() {
