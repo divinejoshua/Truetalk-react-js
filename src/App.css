@@ -48,3 +48,32 @@ header img{
   padding: 10px;
   min-width: 400px;
 }
+
+.header-dropdown {
+  position: relative;
+  display: inline-block;
+  float: right;
+  width: 30px;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  padding: 7px 20px;
+  width: 100px;
+  border: 1px solid #efefef;
+  border-radius: 2px;
+  right: 0px;
+  z-index: 1;
+  transition-delay: 0.2s;
+}
+
+.dropdown-content:hover{
+  background-color: #efefef;
+}
+
+.header-dropdown:hover .dropdown-content {
+  display: block;
+}

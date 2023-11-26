@@ -1,22 +1,29 @@
 import React from 'react'
-import {auth, signInWithGooglePopup, logoutUser } from '../utils/firebase'
+import {auth, signInWithGooglePopup } from '../utils/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import googleBtnSvg from "../assets/socials/google.svg";
+import { useNavigate } from 'react-router-dom';
 
 
 export default function LoginPage() {
-    // Login user
-    const logGoogleUser = async () => {
-        let response = await signInWithGooglePopup();
+  // Use navigate
+  const navigate = useNavigate();
+
+  // data
+  const [user, loading, error] : [any, boolean, any]  = useAuthState(auth);
+
+  // Login user
+  const logGoogleUser = async () => {
+    try{
+      let response = await signInWithGooglePopup();
         // console.log(response);
-    }
 
-    // Logout user 
-    const logOutUser = async () => {
-      let response = await logoutUser()
+        // Redirect to home page
+      navigate("/", { replace: true });
     }
-
-    const [user, loading, error] : [any, boolean, any]  = useAuthState(auth);
+    catch{
+    }
+  }
 
   return (
        <div className='center-page'>
@@ -37,11 +44,6 @@ export default function LoginPage() {
                 <span className='ml-5 mt-1 mr-5'>Continue with Google</span>
             </button>
         </center>
-         {/* <div>
-            <button onClick={logoutUser}>Sign Out</button>
-        </div>
-
-        <p>{user?.uid}</p> */}
       </div>
   )
 }
