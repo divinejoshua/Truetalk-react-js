@@ -24,7 +24,7 @@ export default function HomePage() {
           <img alt="truetalk" src={require("../assets/hero/four.png")} />
         </div>
 
-        <p className='mt-3'>Receive messages from people who care about you </p>
+        <p className='mt-3'>Receive messages from people who care about you</p>
 
         <div className='hero-social-icons flex place-content-center mt-2'>
           <img alt="truetalk" src={facebookSvg} />
