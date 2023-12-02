@@ -24,7 +24,7 @@ export default function HomePage() {
           <img alt="truetalk" src={require("../assets/hero/four.png")} />
         </div>
 
-        <p className='mt-3'>Receive messages from people who care about you </p>
+        <p className='mt-3'>Receive messages from people who care about you</p>
 
         <div className='hero-social-icons flex place-content-center mt-2'>
           <img alt="truetalk" src={facebookSvg} />
@@ -42,9 +42,6 @@ export default function HomePage() {
       </section>
 
       <section className='message-section mt-7 mb-20 px-4'>
-        <div className='message-bar py-4 text-gray-500 border-y'>
-          <h5 className='text-sm'>All messages &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;120</h5>
-        </div>
         <MessageList/>
       </section>
 
