@@ -42,9 +42,6 @@ export default function HomePage() {
       </section>
 
       <section className='message-section mt-7 mb-20 px-4'>
-        <div className='message-bar py-4 text-gray-500 border-y'>
-          <h5 className='text-sm'>All messages &nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;120</h5>
-        </div>
         <MessageList/>
       </section>
 

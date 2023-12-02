@@ -116,6 +116,7 @@
       "@components/*": ["./components/*"],
       "@styles/*": ["./styles/*"],
       "@utils/*": ["./utils/*"]
-    }
+    },
+    "resolveJsonModule": true,
   }
 }
