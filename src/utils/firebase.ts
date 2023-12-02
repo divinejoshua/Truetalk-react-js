@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
+import { getFirestore } from 'firebase/firestore';
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -13,8 +14,8 @@ const firebaseConfig = {
   };
 
 // Initialize Firebase
-// const firebaseApp = initializeApp(firebaseConfig);
-initializeApp(firebaseConfig);
+const firebaseApp = initializeApp(firebaseConfig);
+
 // Initialize Firebase Auth provider
 const provider = new GoogleAuthProvider();
 
@@ -24,4 +25,5 @@ provider.setCustomParameters({
 });
 export const auth = getAuth();
 export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
-export const logoutUser = () =>  signOut(auth); ;
+export const logoutUser = () =>  signOut(auth);
+export default getFirestore(firebaseApp);
