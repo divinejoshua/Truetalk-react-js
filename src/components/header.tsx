@@ -26,7 +26,6 @@ export default function HeaderComponent() {
   return (
     <header className='pb-10'>
         <img alt="truetalk" className='float-left' src={require("../assets/header.png")} />
-        {userDetails?.id}
         {user ?
           <div className="header-dropdown m4-5 hover">
             <img alt="truetalk" onClick={()=> setshowDropdown(!showDropdown)} className='float-left profile-header-img rounded-full' src={user?.photoURL}/>
