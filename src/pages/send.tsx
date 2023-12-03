@@ -1,11 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import HeaderComponent from '../components/Header'
 import userSVG from "../assets/user.svg"
+import firebase from '../utils/firebase';
+import {auth} from '../utils/firebase'
 
 export default function SendMessagePage() {
   //Data
   const [maxLength, setmaxLength] = useState<number>(140)
   const [messageBody, setmessageBody] = useState<string>("")
+
+
+  useEffect(() => {
+    // Assuming you have the UID of the user
+
+  }, []);
+
   return (
     <main className='main'>
       {/* Header component  */}

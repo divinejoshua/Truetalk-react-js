@@ -14,7 +14,7 @@ import {
   orderBy,
   limit,
 } from 'firebase/firestore';
-import firebaseDb from '../utils/firebase';
+import firebase from '../utils/firebase';
 import IMessageBody from '../interface/message.interface';
 import {v4 as uuidv4} from 'uuid';
 import Lottie from 'react-lottie';
@@ -23,7 +23,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import {auth} from '../utils/firebase'
 
 export default function MessageList() {
-  const colletionRef = collection(firebaseDb, 'messages');
+  const colletionRef = collection(firebase, 'messages');
   const [user] : [any, boolean, any]  = useAuthState(auth);
   const [messageList, setmessageList] = useState<IMessageBody[]>([])
   const [isLoading, setisLoading] = useState<boolean>(true)
@@ -38,8 +38,6 @@ export default function MessageList() {
   }
 
   useEffect(() => {
-
-    // console.log(uuidv4())
 
     let userId = user ? user.uid : "0000"
 

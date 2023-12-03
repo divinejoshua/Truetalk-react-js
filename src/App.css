@@ -57,7 +57,7 @@ header img{
 }
 
 .dropdown-content {
-  display: none;
+  display: block;
   position: absolute;
   background-color: #fff;
   padding: 7px 20px;
