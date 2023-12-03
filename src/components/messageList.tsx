@@ -39,8 +39,6 @@ export default function MessageList() {
 
   useEffect(() => {
 
-    // console.log(uuidv4())
-
     let userId = user ? user.uid : "0000"
 
     // Query Statement
