@@ -4,16 +4,10 @@ import firebase from '../utils/firebase';
 import {
     doc,
     onSnapshot,
-    updateDoc,
     setDoc,
-    deleteDoc,
     collection,
-    serverTimestamp,
-    getDocs,
     query,
     where,
-    orderBy,
-    limit,
   } from 'firebase/firestore';
 
 const useUser = (user : any) => {
