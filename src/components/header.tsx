@@ -9,7 +9,7 @@ export default function HeaderComponent() {
   const [user, loading, error] : [any, boolean, any]  = useAuthState(auth);
   const [showDropdown, setshowDropdown] = useState<boolean>(false)
   // Hooks
-  const { findUserById : getOrCreateUser, userDetails} = useUser(user)
+  const { findUserById : getOrCreateUser} = useUser(user)
 
   // Logout user
   const logOutUser = async () => {
