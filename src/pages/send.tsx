@@ -7,6 +7,7 @@ import useUser from '../hooks/UseUserHook';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useParams } from 'react-router-dom';
 import IUser from '../interface/user.interface';
+import { isValidMessageText } from '../utils/stringvalidator';
 
 export default function SendMessagePage() {
 
@@ -16,7 +17,7 @@ export default function SendMessagePage() {
 
   //Data
   const [user, loading, error] : [any, boolean, any]  = useAuthState(auth);
-  const [maxLength, setmaxLength] = useState<number>(140)
+  const [maxLength, setmaxLength] = useState<number>(10)
   const [messageBody, setmessageBody] = useState<string>("")
 
   // Hooks
@@ -24,7 +25,7 @@ export default function SendMessagePage() {
 
 
   // The send messge function
-  const SendMessagePage = () =>{
+  const SendMessage = () =>{
     console.log("Sent")
   }
 
@@ -59,7 +60,7 @@ export default function SendMessagePage() {
             focus:ring-default
             focus:ring-1
             focus:border-100
-            transition duration-0 hover:duration-150' maxLength={maxLength} rows={4} autoFocus 
+            transition duration-0 hover:duration-150' maxLength={maxLength} rows={4} autoFocus
             placeholder={`Write a message to ${recieverUserDetails.fullname}...`}></textarea>
             <p className='text-xs text-gray-500 mt-4 float-right'>{messageBody.length} / {maxLength}</p>
           </div>
@@ -69,12 +70,13 @@ export default function SendMessagePage() {
         <center>
             <button 
             className='btn flex place-content-center mt-10 bg-default text-white px-20 py-2 rounded-full font-bold drop-shadow'
-            disabled={!recieverUserDetails}
-            onClick={()=>}
+            disabled={!recieverUserDetails?.id || !isValidMessageText(messageBody, maxLength)}
+            onClick={()=> SendMessage() }
             >
               Send message
             </button>
         </center>
+
 
         {/* After message is sent */}
         <div className='mt-20'>
