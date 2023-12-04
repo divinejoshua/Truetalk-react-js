@@ -16,8 +16,7 @@ export default function HomePage() {
   // STATE
   const [user, loading, error] : [any, boolean, any]  = useAuthState(auth);
   const [isCopied, setisCopied] = useState<boolean>(false)
-
-  const sendMessageURL = window.location.origin+"/send/"+user?.uid
+  const [sendMessageURL, setsendMessageURL] = useState(String(window.location.origin+"/send/"+user?.uid))
 
   // Copy code to Clipboard
   const copyToClipoard = () => {
@@ -51,6 +50,7 @@ export default function HomePage() {
           <img alt="truetalk" src={require("../assets/hero/four.png")} />
         </div>
 
+{sendMessageURL}
         <p className='mt-3'>Receive messages from people who care about you</p>
 
         <div className='hero-social-icons flex place-content-center mt-2'>

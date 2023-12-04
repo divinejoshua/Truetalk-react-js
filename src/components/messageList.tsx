@@ -25,6 +25,7 @@ export default function MessageList() {
   const colletionRef = collection(firebase, 'messages');
   const [user] : [any, boolean, any]  = useAuthState(auth);
   const [messageList, setmessageList] = useState<IMessageBody[]>([])
+  const [messageListOrder, setmessageListOrder] = useState<IMessageBody[]>([])
   const [isLoading, setisLoading] = useState<boolean>(true)
 
   const emptyMessagesAnimationsOptions = {
@@ -36,11 +37,11 @@ export default function MessageList() {
     }
   }
 
-  // Order message list by time 
-  const orderMessageList = () =>{
-
+  // Order message list by time
+  const reorderMessageListDescending = (messageList : IMessageBody[]) =>{
+    messageList.sort((a : IMessageBody, b: IMessageBody) => b.createdAt - a.createdAt);
+    setmessageListOrder(messageList)
   }
-
 
   useEffect(() => {
 
@@ -58,13 +59,12 @@ export default function MessageList() {
       setisLoading(true)
       const response : IMessageBody | any = [];
       querySnapshot.forEach((doc) => {
-        response.unshift(doc.data())
-
-        console.log(doc.data())
+        response.push(doc.data())
       });
 
-      setmessageList(response.reverse())
+      setmessageList(response)
       setisLoading(false)
+
     });
     return () => {
       getMessages();
@@ -73,6 +73,15 @@ export default function MessageList() {
     // eslint-disable-next-line
   }, []);
 
+
+  // Message list effect
+  useEffect(() => {
+    reorderMessageListDescending(messageList)
+
+    // Call the function and log the reordered list
+    return () => {
+    }
+  }, [messageList])
 
   return (
     <>
@@ -104,7 +113,7 @@ export default function MessageList() {
             : !isLoading && messageList.length > 0 ?
 
               // Messages
-              Array.isArray(messageList) ? messageList.reverse().map((message, index) => (
+              Array.isArray(messageList) ? messageList.map((message, index) => (
                 <div key={index}>
                   <MessageCard key={message.messageId} {...message}/>
                 </div>
