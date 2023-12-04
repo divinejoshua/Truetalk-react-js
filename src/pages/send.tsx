@@ -8,6 +8,17 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { Link, useParams } from 'react-router-dom';
 import IUser from '../interface/user.interface';
 import { isValidMessageText } from '../utils/stringvalidator';
+import {v4 as uuidv4} from 'uuid';
+import {
+  doc,
+  onSnapshot,
+  setDoc,
+  collection,
+  query,
+  where,
+  serverTimestamp
+} from 'firebase/firestore';
+import IMessageBody from '../interface/message.interface';
 
 export default function SendMessagePage() {
 
@@ -16,20 +27,38 @@ export default function SendMessagePage() {
 
 
   //Data
+  const colletionRef = collection(firebase, 'messages');
   const [user, loading, error] : [any, boolean, any]  = useAuthState(auth);
-  const [maxLength, setmaxLength] = useState<number>(10)
+  const [maxLength, setmaxLength] = useState<number>(140)
   const [messageBody, setmessageBody] = useState<string>("")
   const [messageSentSuccess, setmessageSentSuccess] = useState<boolean>(false)
+  const [isError, setisError] = useState<boolean>(false)
 
   // Hooks
   const { getUserById, recieverUserDetails } = useUser(user)
 
 
   // The send messge function
-  const SendMessage = () =>{
-    console.log("Sent")
+  const SendMessage = async() =>{
+
+    let newMessage : IMessageBody = {
+        messageBody: messageBody,
+        receiver : recieverUserDetails.id,
+        createdAt : serverTimestamp(),
+        messageId : uuidv4(),
+    };
+
+    try {
+        const messageRef = doc(colletionRef, newMessage.messageId);
+        await setDoc(messageRef, newMessage);
+        } catch (error) {
+          setisError(true)
+    }
+
     setmessageBody("")
     setmessageSentSuccess(true)
+
+
   }
 
   useEffect(() => {
@@ -50,6 +79,9 @@ export default function SendMessagePage() {
 
           // The text box
           <div>
+
+            {isError && <p className='text-red-500 text-center mt-2 text-sm'>Error occured while sending message.</p>}
+
             <div className='message-card shadow-md border mt-5 py-6 px-4'>
               <div className='profile-card flex'>
                   <img alt="truetalk" src={recieverUserDetails.profile_image} className='rounded-full h-8 w-8'/>
@@ -61,14 +93,15 @@ export default function SendMessagePage() {
 
               <div className='message-body mt-5 font-bold text-gray-700'>
                 <textarea
-                onChange={e => setmessageBody(e.target.value)}
-                className='w-full border rounded p-3
-                focus:outline-none focus:border-default
-                focus:ring-default
-                focus:ring-1
-                focus:border-100
-                transition duration-0 hover:duration-150' maxLength={maxLength} rows={4} autoFocus
-                placeholder={`Write a message to ${recieverUserDetails.fullname}...`}></textarea>
+                  onChange={e => setmessageBody(e.target.value)}
+                  onClick={() => setisError(false)}
+                  className='w-full border rounded p-3
+                  focus:outline-none focus:border-default
+                  focus:ring-default
+                  focus:ring-1
+                  focus:border-100
+                  transition duration-0 hover:duration-150' maxLength={maxLength} rows={4} autoFocus
+                  placeholder={`Write a message to ${recieverUserDetails.fullname}...`}></textarea>
                 <p className='text-xs text-gray-500 mt-4 float-right'>{messageBody.length} / {maxLength}</p>
               </div>
               <img alt="truetalk" src={require("../assets/header.png")} width={60} className='mt-8 opacity-50' />

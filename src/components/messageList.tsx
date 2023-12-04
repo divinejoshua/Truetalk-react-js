@@ -16,7 +16,6 @@ import {
 } from 'firebase/firestore';
 import firebase from '../utils/firebase';
 import IMessageBody from '../interface/message.interface';
-import {v4 as uuidv4} from 'uuid';
 import Lottie from 'react-lottie';
 import emptyMessageAnimation from '../assets/nomessage_animation.json';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -37,6 +36,12 @@ export default function MessageList() {
     }
   }
 
+  // Order message list by time 
+  const orderMessageList = () =>{
+
+  }
+
+
   useEffect(() => {
 
     let userId = user ? user.uid : "0000"
@@ -45,7 +50,7 @@ export default function MessageList() {
     const queryClause = query(
       colletionRef,
       where('receiver', '==', userId),
-      orderBy("receiver", "desc"),
+      orderBy('receiver', 'desc')
     );
 
     // Get messages from database
@@ -53,10 +58,12 @@ export default function MessageList() {
       setisLoading(true)
       const response : IMessageBody | any = [];
       querySnapshot.forEach((doc) => {
-        response.push(doc.data())
+        response.unshift(doc.data())
+
+        console.log(doc.data())
       });
 
-      setmessageList(response)
+      setmessageList(response.reverse())
       setisLoading(false)
     });
     return () => {
@@ -97,7 +104,7 @@ export default function MessageList() {
             : !isLoading && messageList.length > 0 ?
 
               // Messages
-              Array.isArray(messageList) ? messageList.map((message, index) => (
+              Array.isArray(messageList) ? messageList.reverse().map((message, index) => (
                 <div key={index}>
                   <MessageCard key={message.messageId} {...message}/>
                 </div>

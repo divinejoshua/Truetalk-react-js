@@ -2,7 +2,7 @@ import { FieldValue, Timestamp } from "firebase/firestore";
 
 interface IMessageBody {
     messageBody     : string,
-    receiver        : string,
+    receiver?        : string,
     createdAt       : Timestamp | FieldValue,
     messageId       : string
 }
