@@ -16,7 +16,6 @@ import {
 } from 'firebase/firestore';
 import firebase from '../utils/firebase';
 import IMessageBody from '../interface/message.interface';
-import {v4 as uuidv4} from 'uuid';
 import Lottie from 'react-lottie';
 import emptyMessageAnimation from '../assets/nomessage_animation.json';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -26,6 +25,7 @@ export default function MessageList() {
   const colletionRef = collection(firebase, 'messages');
   const [user] : [any, boolean, any]  = useAuthState(auth);
   const [messageList, setmessageList] = useState<IMessageBody[]>([])
+  const [messageListOrder, setmessageListOrder] = useState<IMessageBody[]>([])
   const [isLoading, setisLoading] = useState<boolean>(true)
 
   const emptyMessagesAnimationsOptions = {
@@ -37,6 +37,12 @@ export default function MessageList() {
     }
   }
 
+  // Order message list by time
+  const reorderMessageListDescending = (messageList : IMessageBody[]) =>{
+    messageList.sort((a : IMessageBody, b: IMessageBody) => b.createdAt - a.createdAt);
+    setmessageListOrder(messageList)
+  }
+
   useEffect(() => {
 
     let userId = user ? user.uid : "0000"
@@ -45,7 +51,7 @@ export default function MessageList() {
     const queryClause = query(
       colletionRef,
       where('receiver', '==', userId),
-      orderBy("receiver", "desc"),
+      orderBy('receiver', 'desc')
     );
 
     // Get messages from database
@@ -58,6 +64,7 @@ export default function MessageList() {
 
       setmessageList(response)
       setisLoading(false)
+
     });
     return () => {
       getMessages();
@@ -66,6 +73,15 @@ export default function MessageList() {
     // eslint-disable-next-line
   }, []);
 
+
+  // Message list effect
+  useEffect(() => {
+    reorderMessageListDescending(messageList)
+
+    // Call the function and log the reordered list
+    return () => {
+    }
+  }, [messageList])
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import '../App.css';
 import facebookSvg from "../assets/socials/facebook.svg";
 import instagramSvg from "../assets/socials/instagram.svg";
@@ -8,8 +8,34 @@ import whatsappSvg from "../assets/socials/whatsapp.svg";
 import copyLinkSvg from "../assets/hero/copy-link.svg";
 import HeaderComponent from '../components/Header'
 import MessageList from '../components/MessageList';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../utils/firebase';
 
 export default function HomePage() {
+
+  // STATE
+  const [user, loading, error] : [any, boolean, any]  = useAuthState(auth);
+  const [isCopied, setisCopied] = useState<boolean>(false)
+  const [sendMessageURL, setsendMessageURL] = useState(String(window.location.origin+"/send/"+user?.uid))
+
+  // Copy code to Clipboard
+  const copyToClipoard = () => {
+    if(!user) return //Return if there is no logged in user
+    navigator.clipboard
+      .writeText(sendMessageURL)
+      .then(() => {
+        setisCopied(true);
+        setTimeout(function () {
+          setisCopied(false);
+        }, 3000);
+
+      })
+      .catch((err) => {
+        // console.log(err.message);
+      });
+
+    }
+
   return (
     <main className='main'>
       {/* Header component  */}
@@ -35,8 +61,8 @@ export default function HomePage() {
         </div>
 
         <center>
-          <button className='btn flex place-content-center mt-2 bg-default text-white px-7 py-2 rounded-full text-sm drop-shadow'>
-            <img alt="truetalk" src={copyLinkSvg} className='mt-1'/> &nbsp;&nbsp;Copy link
+          <button onClick={()=> copyToClipoard()} className={`${isCopied ? 'bg-green-500' : 'bg-default'} btn flex place-content-center mt-2 text-white px-7 py-2 rounded-full text-sm drop-shadow transition duration-0 hover:duration-150`}>
+            <img alt="truetalk" src={copyLinkSvg} className='mt-1'/> &nbsp;&nbsp;{ isCopied ? 'Copied !!!' : 'Copy link'}
           </button>
         </center>
       </section>

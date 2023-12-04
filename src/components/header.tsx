@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import {auth, logoutUser} from '../utils/firebase'
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useUser from '../hooks/UseUserHook';
 
 export default function HeaderComponent() {
+  // Use navigate
+  const navigate = useNavigate();
+
+
   // data
   const [user, loading, error] : [any, boolean, any]  = useAuthState(auth);
   const [showDropdown, setshowDropdown] = useState<boolean>(false)
@@ -14,6 +18,7 @@ export default function HeaderComponent() {
   // Logout user
   const logOutUser = async () => {
     let response = await logoutUser()
+    navigate("/login", { replace: true });
   }
 
   useEffect(() => {
