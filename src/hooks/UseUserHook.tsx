@@ -14,8 +14,9 @@ const useUser = (user : any) => {
 
     // STATES
     const colletionRef = collection(firebase, 'users');
-    const [userDetails, setuserDetails] = useState<IUser>({})
+    const [recieverUserDetails, setrecieverUserDetails] = useState<IUser>({})
 
+    // This is findUserById and Then create a new user if it doesn't exist
     const findUserById = async (user :any) : Promise<void> =>{
 
         // Query Statement
@@ -28,7 +29,6 @@ const useUser = (user : any) => {
         // Get user details from database
         onSnapshot(queryClause, (querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                setuserDetails(doc.data())
                 userData = doc.data()
             });
 
@@ -49,15 +49,37 @@ const useUser = (user : any) => {
         };
 
         try {
-            const schoolRef = doc(colletionRef, newUser.id);
-            await setDoc(schoolRef, newUser);
+            const userRef = doc(colletionRef, newUser.id);
+            await setDoc(userRef, newUser);
             } catch (error) {
             console.error(error);
         }
         return
     }
 
-    return { findUserById, createNewUser, userDetails };
+    // This function only returns user details if user exist
+    const getUserById = (userId: string) : IUser =>{
+
+        let userData : IUser = {}
+
+        // Query Statement
+        const queryClause = query(
+            colletionRef,
+            where('id', '==', userId),
+        );
+
+        // Get user details from database
+        onSnapshot(queryClause, (querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                userData = doc.data()
+                setrecieverUserDetails(doc.data())
+            });
+
+        });
+        return userData
+    }
+
+    return { findUserById, createNewUser, getUserById, recieverUserDetails };
 }
 
 export default useUser;

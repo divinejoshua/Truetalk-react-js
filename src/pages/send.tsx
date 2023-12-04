@@ -3,15 +3,35 @@ import HeaderComponent from '../components/Header'
 import userSVG from "../assets/user.svg"
 import firebase from '../utils/firebase';
 import {auth} from '../utils/firebase'
+import useUser from '../hooks/UseUserHook';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useParams } from 'react-router-dom';
+import IUser from '../interface/user.interface';
 
 export default function SendMessagePage() {
+
+  // Get url parameter
+  const { id } : any = useParams()
+
+
   //Data
+  const [user, loading, error] : [any, boolean, any]  = useAuthState(auth);
   const [maxLength, setmaxLength] = useState<number>(140)
   const [messageBody, setmessageBody] = useState<string>("")
 
+  // Hooks
+  const { getUserById, recieverUserDetails } = useUser(user)
+
+
+  // The send messge function
+  const SendMessagePage = () =>{
+    console.log("Sent")
+  }
 
   useEffect(() => {
-    // Assuming you have the UID of the user
+
+    //Get the reciever user details
+    getUserById(id)
 
   }, []);
 
@@ -24,9 +44,9 @@ export default function SendMessagePage() {
         {/* Message card  */}
         <div className='message-card shadow-md border mt-5 py-6 px-4'>
           <div className='profile-card flex'>
-              <img alt="truetalk" src={userSVG}  width={30}/>
+              <img alt="truetalk" src={recieverUserDetails.profile_image} className='rounded-full h-8 w-8'/>
               <div className='text-xs ml-3 text-gray-500'>
-                  <p className='font-bold'>Erin Or</p>
+                  <p className='font-bold text-md text-gray-800'>{recieverUserDetails.fullname}</p>
                   <p className='mt-1'>Tell me what’s on your mind.</p>
               </div>
           </div>
@@ -39,14 +59,19 @@ export default function SendMessagePage() {
             focus:ring-default
             focus:ring-1
             focus:border-100
-            transition duration-0 hover:duration-150' maxLength={maxLength} rows={4} autoFocus placeholder="Write a message to Erin..."></textarea>
+            transition duration-0 hover:duration-150' maxLength={maxLength} rows={4} autoFocus 
+            placeholder={`Write a message to ${recieverUserDetails.fullname}...`}></textarea>
             <p className='text-xs text-gray-500 mt-4 float-right'>{messageBody.length} / {maxLength}</p>
           </div>
           <img alt="truetalk" src={require("../assets/header.png")} width={60} className='mt-8 opacity-50' />
         </div>
 
         <center>
-            <button className='btn flex place-content-center mt-10 bg-default text-white px-20 py-2 rounded-full font-bold drop-shadow'>
+            <button 
+            className='btn flex place-content-center mt-10 bg-default text-white px-20 py-2 rounded-full font-bold drop-shadow'
+            disabled={!recieverUserDetails}
+            onClick={()=>}
+            >
               Send message
             </button>
         </center>
