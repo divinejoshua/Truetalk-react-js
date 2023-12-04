@@ -7,8 +7,10 @@ export function isValidMessageText(value: string, maxLength : number): boolean{
         return false;
     }
 
+    // Check if length of the message is greater than maxLength
     if(value.length > maxLength){
         return false
     }
+    
     return true
 }
