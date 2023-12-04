@@ -50,7 +50,6 @@ export default function HomePage() {
           <img alt="truetalk" src={require("../assets/hero/four.png")} />
         </div>
 
-{sendMessageURL}
         <p className='mt-3'>Receive messages from people who care about you</p>
 
         <div className='hero-social-icons flex place-content-center mt-2'>
