@@ -127,7 +127,7 @@ export default function SendMessagePage() {
               <p className='font-bold text-gray-500'>Get your own link and receive messages from your friends!</p>
               <Link to="/login">
                 <button className='btn flex place-content-center mt-7 bg-default text-white px-20 py-2 rounded-full font-bold drop-shadow'>
-                  Get yours
+                  Get your link
                 </button>
               </Link>
             </center>
