@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {auth, signInWithGooglePopup } from '../utils/firebase'
 import { createSearchParams, useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
@@ -7,9 +7,10 @@ export default function GoogleLoginPage() {
     // Use navigate
     const navigate = useNavigate();
 
-    // Data
-//   const [user, loading, error] : [any, boolean, any]  = useAuthState(auth);
+    // Use ref
+    const logButtonRef : any= useRef(null);
 
+    // Data
     const [email, setemail] = useState();
     const [fullname, setfullname] = useState("")
 
@@ -25,7 +26,9 @@ export default function GoogleLoginPage() {
     }
 
   useEffect(() => {
-    // logGoogleUser()
+    if (logButtonRef.current) {
+        logButtonRef.current.click();
+      }
   }, [])
 
 
@@ -44,6 +47,6 @@ export default function GoogleLoginPage() {
   }, [email]);
 
   return (
-    <button onClick={logGoogleUser} >Login with google</button>
+    <button ref={logButtonRef} onClick={logGoogleUser} >Login with google</button>
   )
 }
