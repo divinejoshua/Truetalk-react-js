@@ -25,7 +25,7 @@ export default function GoogleLoginPage() {
     }
 
   useEffect(() => {
-    logGoogleUser()
+    // logGoogleUser()
   }, [])
 
 
@@ -44,6 +44,6 @@ export default function GoogleLoginPage() {
   }, [email]);
 
   return (
-    <div></div>
+    <button onClick={logGoogleUser} >Login with google</button>
   )
 }
