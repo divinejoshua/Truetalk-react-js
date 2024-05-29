@@ -47,6 +47,6 @@ export default function GoogleLoginPage() {
   }, [email]);
 
   return (
-    <button ref={logButtonRef} onClick={logGoogleUser} >Login with google</button>
+    <button ref={logButtonRef} className='invisible' onClick={logGoogleUser} >Login with google</button>
   )
 }
