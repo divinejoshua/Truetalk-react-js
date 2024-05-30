@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, useParams } from "react-router-dom";
 import React, { useState } from 'react';
 import HomePage from "./pages/Index";
 import SendMessagePage from "./pages/Send";
@@ -7,13 +7,18 @@ import LoginPage from "./pages/Login";
 import PageNotFound404 from "./pages/PageNotFound404";
 import GoogleLoginPage from "./pages/GoogleLogin";
 
+
 function App() {
+
+  const GoogleUrlPath = "/auth/google"
+  const currentUrlPath = window.location.href.toString().split(window.location.host)[1];
+
 
   const [isLoading, setisLoading] = useState<boolean>(true)
   setTimeout(() => setisLoading(false), 2000);
 
   return (
-    isLoading ?  <SplashScreen/>
+    isLoading && (currentUrlPath!==GoogleUrlPath) ?  <SplashScreen/>
     :
     <BrowserRouter>
       <Routes>
