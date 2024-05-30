@@ -11,8 +11,8 @@ import GoogleLoginPage from "./pages/GoogleLogin";
 function App() {
 
   const GoogleUrlPath = "/auth/google"
-  const currentUrlPath = window.location.href.toString().split(window.location.host)[1];
-
+  const urlObj = new URL(window.location.href);
+  let currentUrlPath = urlObj.pathname
 
   const [isLoading, setisLoading] = useState<boolean>(true)
   setTimeout(() => setisLoading(false), 2000);
