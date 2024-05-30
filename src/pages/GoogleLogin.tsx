@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {auth, signInWithGooglePopup } from '../utils/firebase'
 import { createSearchParams, redirect, useNavigate } from 'react-router-dom';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import googleBtnSvg from "../assets/socials/google.svg";
 
 export default function GoogleLoginPage() {
     // Use navigate
@@ -28,18 +28,18 @@ export default function GoogleLoginPage() {
       const queryParameters = new URLSearchParams(window.location.search)
       const redirectUrl = queryParameters.get("redirectUrl")
       window.location.href = `${redirectUrl}?email=${email}&fullname=${fullname}`;
-        // navigate({
-        //     pathname: "/auth/google",
-        //     search: createSearchParams({
-        //         email: email,
-        //         fullname: fullname
-        //     }).toString()
-        // });
     }
       // eslint-disable-next-line
   }, [email]);
 
   return (
-    <button onClick={logGoogleUser} >Login with google</button>
+    <div className='center-page'>
+      <center>
+          <button onClick={logGoogleUser} className='btn flex place-content-center mt-7 bg-default text-white py-2 px-2 rounded-full font-bold drop-shadow'>
+              <img alt="truetalk" src={googleBtnSvg} width={32}/>
+              <span className='ml-5 mt-1 mr-5'>Continue with Google</span>
+          </button>
+      </center>
+    </div>
   )
 }
