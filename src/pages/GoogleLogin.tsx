@@ -37,7 +37,7 @@ export default function GoogleLoginPage() {
       <center>
           <button onClick={logGoogleUser} className='btn flex place-content-center mt-7 bg-default text-white py-2 px-2 rounded-full font-bold drop-shadow'>
               <img alt="truetalk" src={googleBtnSvg} width={32}/>
-              <span className='ml-5 mt-1 mr-5'>Continue with Google</span>
+              <span className='ml-5 mt-1 mr-5'>Accept and continue</span>
           </button>
       </center>
     </div>
