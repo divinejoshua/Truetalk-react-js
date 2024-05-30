@@ -1,14 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {auth, signInWithGooglePopup } from '../utils/firebase'
-import { createSearchParams, useNavigate } from 'react-router-dom';
+import { createSearchParams, redirect, useNavigate } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 export default function GoogleLoginPage() {
     // Use navigate
     const navigate = useNavigate();
-
-    // Use ref
-    const logButtonRef : any= useRef(null);
 
     // Data
     const [email, setemail] = useState();
@@ -25,28 +22,24 @@ export default function GoogleLoginPage() {
         }
     }
 
-  useEffect(() => {
-    if (logButtonRef.current) {
-        logButtonRef.current.click();
-      }
-  }, [])
-
-
   //   Redirect the user if logged in
   useEffect(() => {
     if(email){
-        navigate({
-            pathname: "/auth/google",
-            search: createSearchParams({
-                email: email,
-                fullname: fullname
-            }).toString()
-        });
+      const queryParameters = new URLSearchParams(window.location.search)
+      const redirectUrl = queryParameters.get("redirectUrl")
+      window.location.href = `${redirectUrl}?email=${email}&fullname=${fullname}`;
+        // navigate({
+        //     pathname: "/auth/google",
+        //     search: createSearchParams({
+        //         email: email,
+        //         fullname: fullname
+        //     }).toString()
+        // });
     }
       // eslint-disable-next-line
   }, [email]);
 
   return (
-    <button ref={logButtonRef} className='invisible' onClick={logGoogleUser} >Login with google</button>
+    <button onClick={logGoogleUser} >Login with google</button>
   )
 }
