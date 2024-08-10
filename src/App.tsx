@@ -6,6 +6,7 @@ import SplashScreen from "./components/SplashScreen";
 import LoginPage from "./pages/Login";
 import PageNotFound404 from "./pages/PageNotFound404";
 import GoogleLoginPage from "./pages/GoogleLogin";
+import MicrosoftLoginPage from "./pages/MicrosoftLogin";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
           <Route path="send/:id" element={<SendMessagePage />} />
           <Route path="login" element={<LoginPage />} />
           <Route path="auth/google" element={<GoogleLoginPage />} />
+          <Route path="auth/microsoft" element={<MicrosoftLoginPage />} />
           {/* 404  */}
           <Route path="*" element={<PageNotFound404/>}/>
       </Routes>
