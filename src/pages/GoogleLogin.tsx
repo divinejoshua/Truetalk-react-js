@@ -35,16 +35,6 @@ export default function GoogleLoginPage() {
   }, [email]);
 
 
-    //   Redirect the user if logged in
-    useEffect(() => {
-      if(token){
-        const queryParameters = new URLSearchParams(window.location.search)
-        const redirectUrl = queryParameters.get("redirectUrl")
-        // window.location.href = `${redirectUrl}?email=${email}&fullname=${fullname}`;
-      }
-        // eslint-disable-next-line
-    }, [token]);
-
   return (
     <div className='center-page'>
       <center>
@@ -53,7 +43,7 @@ export default function GoogleLoginPage() {
               <span className='ml-5 mt-1 mr-5'>Accept and continue</span>
           </button>
         <br></br>
-          Token
+          Token:
           <p className='p-10 max-w-screen-md text-balance'>{token}</p>
       </center>
     </div>

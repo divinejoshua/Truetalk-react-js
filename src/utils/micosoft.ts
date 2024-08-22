@@ -26,9 +26,10 @@ provider.setCustomParameters({
     // tenant: '1cdd977a-46b7-416d-a7c1-3ac159e6b565',
 });
 export const auth = getAuth();
-export const signInWithMicrosoftPopup = () => {
+export const signInWithMicrosoftPopup = async () => {
+    let response = null
     const auth = getAuth();
-    signInWithPopup(auth, provider)
+    await signInWithPopup(auth, provider)
     .then((result) => {
         // User is signed in.
         // IdP data available in result.additionalUserInfo.profile.
@@ -40,10 +41,13 @@ export const signInWithMicrosoftPopup = () => {
 
         console.log(accessToken)
         console.log(idToken)
+
+        response=credential
     })
     .catch((error) => {
         // Handle error.
     });
+    return response
 };
 export const logoutUser = () =>  signOut(auth);
 export default getFirestore(firebaseApp);
