@@ -9,12 +9,14 @@ export default function GoogleLoginPage() {
 
     // Data
     const [email, setemail] = useState();
+    const [token, settoken] = useState();
     const [fullname, setfullname] = useState("")
 
         // Login user
     const logGoogleUser = async () => {
         try{
         let response : any = await signInWithGooglePopup();
+            settoken(response.user.accessToken)
             setemail(response.user.email)
             setfullname(response.user.displayName)
         }
@@ -27,10 +29,21 @@ export default function GoogleLoginPage() {
     if(email){
       const queryParameters = new URLSearchParams(window.location.search)
       const redirectUrl = queryParameters.get("redirectUrl")
-      window.location.href = `${redirectUrl}?email=${email}&fullname=${fullname}`;
+      // window.location.href = `${redirectUrl}?email=${email}&fullname=${fullname}`;
     }
       // eslint-disable-next-line
   }, [email]);
+
+
+    //   Redirect the user if logged in
+    useEffect(() => {
+      if(token){
+        const queryParameters = new URLSearchParams(window.location.search)
+        const redirectUrl = queryParameters.get("redirectUrl")
+        // window.location.href = `${redirectUrl}?email=${email}&fullname=${fullname}`;
+      }
+        // eslint-disable-next-line
+    }, [token]);
 
   return (
     <div className='center-page'>
@@ -39,6 +52,9 @@ export default function GoogleLoginPage() {
               <img alt="truetalk" src={googleBtnSvg} width={32}/>
               <span className='ml-5 mt-1 mr-5'>Accept and continue</span>
           </button>
+        <br></br>
+          Token
+          <p className='p-10 max-w-screen-md text-balance'>{token}</p>
       </center>
     </div>
   )
